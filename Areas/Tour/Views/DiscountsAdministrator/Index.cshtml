@@ -1,0 +1,63 @@
+﻿@model IEnumerable<HKQTravellingAuthenication.Models.Tour.Discounts>
+
+@{
+    ViewData["Title"] = "Quản lý chương trình giảm giá";
+    Layout = "_Layout";
+}
+<div class="tile">
+    <h3 class="tile-tile">Quản lý chương trình giảm giá</h3>
+    <p>
+        <a href="@Url.Action("Create", "DiscountsAdministrator", new { area = "Tour" })">Create New</a>
+    </p>
+    <table class="table" id="discountsTable">
+        <thead>
+            <tr>
+                <th>
+                    @Html.DisplayNameFor(model => model.DiscountName)
+                </th>
+                <th>
+                    @Html.DisplayNameFor(model => model.DiscountPercentage)
+                </th>
+                <th>
+                    @Html.DisplayNameFor(model => model.DiscountDateStart)
+                </th>
+                <th>
+                    @Html.DisplayNameFor(model => model.DiscountDateEnd)
+                </th>
+                <th></th>
+            </tr>
+        </thead>
+        <tbody>
+            @foreach (var item in Model)
+            {
+                <tr>
+                    <td>
+                        @Html.DisplayFor(modelItem => item.DiscountName)
+                    </td>
+                    <td>
+                        @Html.DisplayFor(modelItem => item.DiscountPercentage)
+                    </td>
+                    <td>
+                        @Html.DisplayFor(modelItem => item.DiscountDateStart)
+                    </td>
+                    <td>
+                        @Html.DisplayFor(modelItem => item.DiscountDateEnd)
+                    </td>
+                    <td>
+                        <a href="@Url.Action("Edit", "DiscountsAdministrator", new { area = "Tour", id = item.DiscountId })">Edit</a> |
+                        <a href="@Url.Action("Delete", "DiscountsAdministrator", new { area = "Tour", id = item.DiscountId })">Delete</a>
+                    </td>
+                </tr>
+            }
+        </tbody>
+    </table>
+</div>
+@section Scripts {
+    <script>
+        $(document).ready(function () {
+            $('#discountsTable').DataTable({
+                // Tùy chọn DataTables có thể thêm ở đây
+            });
+        });
+    </script>
+}

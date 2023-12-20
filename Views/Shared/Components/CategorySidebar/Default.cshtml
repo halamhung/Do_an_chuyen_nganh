@@ -1,0 +1,53 @@
+﻿@using HKQTravellingAuthenication.Components
+@model HKQTravellingAuthenication.Components.CategorySidebar.CategorySidebarData
+
+
+@{
+    int level = Model.level; 
+}
+@if (Model.categories.Count > 0)
+{ 
+    @if(level == 0){
+        @Html.Raw("<div class=\"categorysidebar\">");
+        <div class="cm">
+           <h3>
+                <a asp-controller="ViewPost" asp-action="Index" asp-route-categoryslug="">
+                    TẤT CẢ CHUYÊN MỤC
+                    </a>
+           </h3>
+        </div>
+    }
+
+<div class="dscm">
+    <ul>
+        @foreach(var Category in Model.categories){
+            var cssActive = (Category.Slug == Model.categoryslug) ? "active" : null;
+            <li>
+                <a class="category-toggle @cssActive" asp-controller="ViewPost" asp-action="Index" asp-route-categoryslug="@Category.Slug">
+                    @Category.Title
+                    @if(Category.CategoryChildren?.Count > 0)
+                    {
+                        <span class="arrow">&#9660;</span>
+                    }
+                </a>
+                @if(Category.CategoryChildren?.Count > 0)
+                {
+                    <ul class="subcategories">
+                        @await Component.InvokeAsync("HKQTravellingAuthenication.Components.CategorySidebar",
+                            new CategorySidebar.CategorySidebarData()
+                            {
+                                categories = Category.CategoryChildren.ToList(),
+                                level = level + 1,   
+                                categoryslug = ViewBag.categoryslug,
+                            })
+                    </ul>
+                }
+            </li>
+        }
+    </ul>
+</div>
+
+  if(level == 0){
+        Html.Raw("</div>");
+    }
+}

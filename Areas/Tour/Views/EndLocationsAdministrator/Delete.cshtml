@@ -1,0 +1,41 @@
+﻿@model HKQTravellingAuthenication.Models.Tour.EndLocations
+
+@{
+    ViewData["Title"] = "Xóa bỏ điểm đến";
+    Layout = "_Layout";
+}
+<style>
+    .dl-horizontal {
+        display: flex;
+        flex-wrap: wrap;
+    }
+
+        .dl-horizontal dt {
+            flex-basis: 30%; /* Điều chỉnh độ rộng của các phần tử dt */
+            flex-shrink: 0;
+            margin-right: 15px; /* Khoảng cách giữa các phần tử dt và dd */
+        }
+
+        .dl-horizontal dd {
+            flex-basis: 70%; /* Điều chỉnh độ rộng của các phần tử dd */
+            flex-shrink: 0;
+        }
+</style>
+
+<div>
+    <h3 class="tile-tile">Bạn có chắc chắn là xóa điểm kết thúc này?</h3>
+    <dl class="dl-horizontal">
+        <dt>
+            @Html.DisplayNameFor(model => model.EndLocationName)
+        </dt>
+        <dd>
+            @Html.DisplayFor(model => model.EndLocationName)
+        </dd>
+    </dl>
+
+    <form asp-action="Delete" asp-controller="EndLocationsAdministrator" asp-area="Tour" method="post">
+        <input type="hidden" asp-for="EndLocationId" />
+        <button class="btn btn-save" value="Delete" type="submit">Xóa</button>
+        <a class="btn btn-cancel" href="@Url.Action("Index", "EndLocationsAdministrator", new { area = "Tour" })">Hủy bỏ</a>
+    </form>
+</div>

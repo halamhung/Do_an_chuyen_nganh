@@ -1,0 +1,242 @@
+﻿@{
+    ViewData["Title"] = "DetailTour";
+    Layout = "~/Views/Shared/_Layout.cshtml";
+}
+
+<style>
+    .footer {
+        background-color: initial !important;
+    }
+
+    .card {
+        border: initial !important;
+    }
+
+    .table {
+        width: 23% !important;
+    }
+
+    .horizontal-container {
+        display: flex;
+        flex-wrap: nowrap;
+        gap: 10px; /* Đảm bảo các bảng không xuống dòng */
+    }
+
+    .child-booking {
+        flex: 0 0 calc(25% - 10px); /* Định kích thước cho mỗi bảng (25% của container) */
+        margin-bottom: 10px;
+        box-sizing: border-box;
+    }
+
+    .multiple-rows {
+        flex-wrap: wrap; /* Cho phép các bảng xuống hàng khi không đủ không gian */
+    }
+
+        .multiple-rows .child-booking {
+            flex: 0 0 calc(50% - 10px); /* Hiển thị 2 bảng trên mỗi hàng */
+        }
+
+            .multiple-rows .child-booking:nth-child(odd) {
+                margin-right: 10px; /* Khoảng cách giữa các bảng */
+            }
+
+            .multiple-rows .child-booking:nth-child(even) {
+                margin-left: 10px; /* Khoảng cách giữa các bảng */
+            }
+
+    .img-size {
+        width: 958px;
+        height: 472px;
+        border-radius: 20px;
+    }
+
+</style>
+
+<form asp-action="DetailTour" asp-controller="Tour" method="post">
+    <div class="container float-lg-end">
+        <div class="card">
+            <div class="card-body">
+                <div class="row">
+                        @if (ViewBag.ImageUrls != null)
+                        {
+                            foreach (var imageUrl in ViewBag.ImageUrls)
+                            {
+                                <div class="col-lg-4 col-md-4 col-sm-6 mySlides">
+                                    <img src="~/User/img/Tour/@imageUrl" class="img-size" alt="Tour Image">
+                                </div>
+                            }
+                        }
+                </div>
+                <div class="col-lg-7 col-md-7 col-sm-6">
+                    @if (ViewBag.Detail != null)
+                    {
+                        <h2 class="mt-5">
+                            @ViewBag.Detail.TourName
+                        </h2>
+                        <h2 class="mt-5">
+                            Giá chỉ từ: <small class="text-success">@String.Format("{0:0,0}", ViewBag.Detail.Price) VND</small>
+                        </h2>
+                        <input type="hidden" id="price-adult" value="@ViewBag.Detail.Price" />
+                        <input type="hidden" id="tourId" name="tourId" value="@ViewBag.Detail.TourId" />
+                    }
+
+                    <div class="content_detail" style="margin-top: 30px;">
+                        @Html.Raw(@ViewBag.Detail.Description);
+                    </div>
+                    
+                </div>
+            </div>
+            <div class="booking" style="margin-top: 10px;">
+                <h1>Đặt chuyến du lịch</h1>
+                <div class="form-group">
+                    <label for="ngaykhoihanh">
+                        @if (@ViewBag.Detail != null)
+                        {
+                            <p>Ngày khởi hành dự kiến: @ViewBag.Detail.StartDate</p>
+                        }
+                    </label>
+                </div>
+                <div class="form-group">
+                    <label for="nguoilon">Người lớn:</label>
+                    <input type="number" class="form-control" id="nguoilon" name="nguoilon" value="0">
+                </div>
+                <div class="form-group treme">
+                    <label for="treem">Trẻ em:</label>
+                    <input type="number" class="form-control" id="treem" name="treem" value="0">
+                </div>
+                <div class="form-group">
+                    <button type="button" class="btn btn-primary btn-tinhTong">Tính toán</button>
+                </div>
+                <div class="total">
+                    <h2>Tổng cộng:</h2>
+                    <p id="tongcong" name="tongcong"></p>
+                    <input type="hidden" id="hiddenTongCong" name="tongcong" />
+                </div>
+                <div class="request">
+                    <button class="btn btn-success">Thanh toán</button>
+                </div>
+            </div>
+        </div>
+    </div>
+
+</form>
+
+<script>
+    function hienThiBang() {
+        // Lưu trữ giá trị hiện tại của mỗi select tuổi
+        var giaTriHienTai = [];
+        var selects = document.getElementsByClassName("form-control");
+        for (var i = 0; i < selects.length; i++) {
+            giaTriHienTai.push(selects[i].value);
+        }
+        // Đặt lại giá trị cho select tuổi
+        if (giaTriHienTai[i]) {
+            document.getElementById("age" + i).value = giaTriHienTai[i];
+        }
+
+        // Xóa các bảng hiện tại
+        var bangHienTai = document.getElementsByTagName("table");
+        while (bangHienTai[0]) {
+            bangHienTai[0].parentNode.removeChild(bangHienTai[0]);
+        }
+
+        var soLuongTreEm = document.getElementById("treem").value;
+        var tremeElement = document.querySelector(".treme");
+
+        var horizontalContainer = document.createElement("div");
+        horizontalContainer.classList.add("horizontal-container");
+
+        for (var i = 1; i <= soLuongTreEm; i++) {
+            var bang = document.createElement("table");
+            bang.innerHTML = `
+                                                              <tbody class="child-booking">
+                                                                  <td colspan="3">
+                                                                    <div class="form-group">
+                                                                      <label for="age${i}">Trẻ ${i}: </label>
+                                                                      <select class="form-control" id="age${i}">
+                                                                        <option value="0-2">0-2</option>
+                                                                        <option value="3-11">3-11</option>
+                                                                        <option value="12-18">12-18</option>
+                                                                      </select>
+                                                                    </div>
+                                                                  </td>
+                                                                </tr>
+                                                              </tbody>
+                                                            `;
+            horizontalContainer.appendChild(bang);
+            // Thay đổi dòng này để thêm bảng vào phần tử mong muốn
+            //document.querySelector(".treme").appendChild(bang);
+        }
+        if (soLuongTreEm > 4) {
+            horizontalContainer.classList.add("multiple-rows");
+        }
+        tremeElement.appendChild(horizontalContainer);
+    }
+
+    document.getElementById("treem").addEventListener("change", hienThiBang);
+
+    var slideIndex = 0;
+    showSlides();
+
+
+    //Chạy hình nếu > 1 hình
+    function showSlides() {
+        var i;
+        var slides = document.getElementsByClassName("mySlides");
+
+        // Nếu chỉ có một slide, dừng hàm
+        if (slides.length <= 1) {
+            return;
+        }
+
+        for (i = 0; i < slides.length; i++) {
+            slides[i].style.display = "none";
+        }
+
+        slideIndex++;
+        if (slideIndex > slides.length) { slideIndex = 1 }
+
+        slides[slideIndex - 1].style.display = "block";
+
+        setTimeout(showSlides, 2000); // Thay đổi hình ảnh sau mỗi 2 giây
+    }
+
+
+
+
+    //Tính tổng tiền
+    function tinhTong() {
+        var soNguoiLon = document.getElementById("nguoilon").value;
+        var soTreEm = document.getElementById("treem").value;
+        var giaTriNguoiLon = parseInt(document.getElementById("price-adult").value);
+
+        var tongCong = giaTriNguoiLon * soNguoiLon;
+
+        for (var i = 1; i <= soTreEm; i++) {
+            var tuoiTreEm = document.getElementById("age" + i).value;
+            switch (tuoiTreEm) {
+                case "0-2":
+                    // Miễn phí
+                    break;
+                case "3-11":
+                    // Giảm 50%
+                    tongCong += giaTriNguoiLon * 0.5;
+                    break;
+                case "12-18":
+                    // Giảm 20%
+                    tongCong += giaTriNguoiLon * 0.8;
+                    break;
+            }
+            document.getElementById("age" + i).addEventListener("change", tinhTong);
+        }
+        document.getElementById("nguoilon").addEventListener("change", tinhTong);
+        // Định dạng số
+        var tongCongFormatted = tongCong.toLocaleString('vi-VN');
+
+        document.getElementById("tongcong").innerHTML = tongCongFormatted + " VND";
+        document.getElementById("hiddenTongCong").value = tongCong;
+    }
+    document.querySelector(".btn-tinhTong").addEventListener("click", tinhTong);
+
+
+</script>

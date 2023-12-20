@@ -1,0 +1,25 @@
+﻿<div class="dropdown">
+    <button class="btn btn-outline-danger dropdown-toggle" type="button" id="dropdownMenuButton" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+        Manage
+    </button>
+    <div class="dropdown-menu" aria-labelledby="dropdownMenuButton" style="left: -92px;">
+        <a class="dropdown-menu" asp-action="Index" asp-controller="DbManage" asp-area="Database" >
+            Database
+        </a>
+        <a class="dropdown-item" asp-action="Index" asp-controller="Contact" asp-area="Contact" >
+            Quản lý Liên hệ
+        </a>
+        <a class="dropdown-item" asp-action="Index" asp-controller="Role" asp-area="Identity" >
+            Quản lý role (vai trò)
+        </a>
+        <a class="dropdown-item" asp-action="Index" asp-controller="User" asp-area="Identity" >
+            Quản lý thành viên
+        </a>
+         <a class="dropdown-item" asp-action="Index" asp-controller="Category" asp-area="Blog" >
+            Quản lý chuyên mục
+        </a>
+        <a class="dropdown-item" asp-action="Index" asp-controller="Post" asp-area="Blog">
+            Quản lý bài viết Blog
+        </a>
+    </div>
+</div>

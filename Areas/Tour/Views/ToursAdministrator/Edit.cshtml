@@ -1,0 +1,100 @@
+﻿@model HKQTravellingAuthenication.Models.Tour.Tours
+
+@{
+    ViewData["Title"] = "Cập nhật thông tin lịch trình";
+    Layout = "_Layout";
+}
+
+<div class="tile">
+    <h3 class="tile-tile">Cập nhật thông tin lịch trình</h3>
+
+    <form asp-action="Edit" asp-controller="ToursAdministrator" asp-area="Tour" method="post">
+        <div class="tile-body">
+            <div class="row">
+                <div asp-validation-summary="ModelOnly" class="text-danger"></div>
+                <input type="hidden" asp-for="TourId" />
+                <div class="form-group col-md-3">
+                    <label asp-for="TourName" class="control-label"></label>
+                    <input asp-for="TourName" class="form-control" name="TourName" />
+                    <p class="text-danger">@ViewData["validation_message_tourName"]</p>
+                </div>
+                <div class="form-group col-md-3">
+                    <label asp-for="Price" class="control-label"></label>
+                    <input asp-for="Price" class="form-control" name="Price" />
+                    <span asp-validation-for="Price" class="text-danger"></span>
+                </div>
+                <div class="form-group col-md-3">
+                    <label asp-for="StartDate" class="control-label"></label>
+                    <input asp-for="StartDate" class="form-control" name="StartDate" />
+                    <span asp-validation-for="StartDate" class="text-danger"></span>
+                </div>
+                <div class="form-group col-md-3">
+                    <label asp-for="EndDate" class="control-label"></label>
+                    <input asp-for="EndDate" class="form-control" name="EndDate" />
+                    <span asp-validation-for="EndDate" class="text-danger"></span>
+                </div>
+                <div class="form-group col-md-3">
+                    <label asp-for="Remaining" class="control-label"></label>
+                    <input asp-for="Remaining" class="form-control" name="Remaining" />
+                    <span asp-validation-for="Remaining" class="text-danger"></span>
+                </div>
+                <div class="form-group col-md-3">
+                    <label asp-for="DiscountId" class="control-label"></label>
+                    <select asp-for="DiscountId" class="form-control" asp-items="ViewBag.DiscountId" name="DiscountId"></select>
+                    <span asp-validation-for="DiscountId" class="text-danger"></span>
+                </div>
+                <div class="form-group col-md-3">
+                    <label asp-for="StartLocationId" class="control-label"></label>
+                    <select asp-for="StartLocationId" class="form-control" asp-items="ViewBag.StartLocationId" name="StartLocationId"></select>
+                    <span asp-validation-for="StartLocationId" class="text-danger"></span>
+                </div>
+                <div class="form-group col-md-3">
+                    <label asp-forEndLocationId" class="control-label"></label>
+                    <select asp-for="EndLocationId" class="form-control" asp-items="ViewBag.EndLocationId" name="EndLocationid"></select>
+                    <span asp-validation-for="EndLocationId" class="text-danger"></span>
+                </div>
+                <div class="form-group col-md-3">
+                    <label asp-for="TourTypeId" class="control-label"></label>
+                    <select asp-for="TourTypeId" class="form-control" asp-items="ViewBag.TourTypeId" name="TourTypeId"></select>
+                </div>
+                <div class="form-group col-md-3">
+                    <label asp-for="PriceInclude" class="control-label"></label>
+                    <input asp-for="PriceInclude" class="form-control" name="PriceInclude" />
+                    <span asp-validation-for="PriceInclude" class="text-danger"></span>
+                </div>
+                <div class="form-group col-md-3">
+                    <label asp-for="PriceNotInclude" class="control-label"></label>
+                    <input asp-for="PriceNotInclude" class="form-control" name="PriceNotInclude" />
+                    <span asp-validation-for="PriceNotInclude" class="text-danger"></span>
+                </div>
+                <div class="form-group col-md-3">
+                    <label asp-for="Surcharge" class="control-label"></label>
+                    <input asp-for="Surcharge" class="form-control" name="Surcharge" />
+                    <span asp-validation-for="Surcharge" class="text-danger"></span>
+                </div>
+                <div class="form-group col-md-3">
+                    <label asp-for="CancelChange" class="control-label"></label>
+                    <input asp-for="CancelChange" class="form-control" name="CancelChange" />
+                    <span asp-validation-for="CancelChange" class="text-danger"></span>
+                </div>
+                <div class="form-group col-md">
+                    <label asp-for="Note" class="control-label"></label>
+                    <input asp-for="Note" class="form-control" name="Note" />
+                    <span asp-validation-for="Note" class="text-danger"></span>
+                </div>
+                <div class="form-group col-md-12">
+                    <label asp-for="Description" class="control-label"></label>
+                    <textarea asp-for="Description" class="form-control" id="mySummernoteEditor" name="Description"></textarea>
+                    <span asp-validation-for="Description" class="text-danger"></span>
+                </div>
+            </div>
+        </div>
+        <button class="btn btn-save" value="Save" type="submit">Lưu lại</button>
+        <a class="btn btn-cancel" href="@Url.Action("Index")">Hủy bỏ</a>
+    </form>
+</div>
+
+@{
+    var summernote = new HKQTravellingAuthenication.Models.Summernote("#mySummernoteEditor");
+}
+<partial name="_Summernote" model="summernote" />

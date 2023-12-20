@@ -1,0 +1,97 @@
+﻿@model HKQTravellingAuthenication.Areas.Tour.Models.TourExtraViewModel
+
+@{
+    ViewData["Title"] = "Details";
+    Layout = "_Layout";
+}
+
+<div class="tile">
+    <h3 class="tile-tile">Chi tiết về lịch trình</h3>
+    <hr />
+    <dl class="dl-horizontal">
+        <dt>
+            <p>Tên tour</p>
+        </dt>
+        <dd>
+            @Html.DisplayFor(model => model.Tours.TourName)
+        </dd>
+        <dt>
+            <p>Giá</p>
+        </dt>
+        <dd>
+            @Html.DisplayFor(model => model.Tours.Price)
+        </dd>
+        <dt>
+            <p>Ngày bắt đầu</p>
+        </dt>
+        <dd>
+            @Html.DisplayFor(model => model.Tours.StartDate)
+        </dd>
+        <dt>
+            <p>Ngày kết thúc</p>
+        </dt>
+        <dd>
+            @Html.DisplayFor(model => model.Tours.EndDate)
+        </dd>
+        <dt>
+            <p>Trạng thái</p>
+        </dt>
+        <dd>
+            @Html.DisplayFor(model => model.Tours.Status)
+        </dd>
+        <dt>
+            <p>Ngày tạo</p>
+        </dt>
+        <dd>
+            @Html.DisplayFor(model => model.Tours.CreationDate)
+        </dd>
+        <dt>
+            <p>Ngày cập nhật</p>
+        </dt>
+        <dd>
+            @Html.DisplayFor(model => model.Tours.UpdateDate)
+        </dd>
+        <dt>
+            <p>Số lượng tồn</p>
+        </dt>
+        <dd>
+            @Html.DisplayFor(model => model.Tours.Remaining)
+        </dd>
+        <dt>
+            <p>Miêu tả</p>
+        </dt>
+        <dd>
+            @if (Model.Tours.Description != null)
+            {
+                @Html.Raw(Model.Tours.Description)
+            }
+            else
+            {
+                <p>Description is not available.</p>
+            }
+
+        </dd>
+        <dt>
+            <p>Tên giảm giá</p>
+        </dt>
+        <dd>
+            @Html.DisplayFor(model => model.Tours.discounts.DiscountName)
+        </dd>
+        <dt>
+            <p>Tên điểm khởi hành</p>
+        </dt>
+        <dd>
+            @Html.DisplayFor(model => model.Tours.startLocations.StartLocationName)
+        </dd>
+        <dt>
+            <p>Tên điểm đến</p>
+        </dt>
+        <dd>
+            @Html.DisplayFor(model => model.Tours.endLocations.EndLocationName)
+        </dd>
+    </dl>
+</div>
+<div class="tile">
+    <a class="btn btn-primary" asp-action="Edit" asp-route-id="@Model.Tours.TourId">Edit</a>
+    <a class="btn btn-cancel" href="@Url.Action("Index", "ToursAdministrator", new { area = "Tour" })">Hủy bỏ</a>
+</div>

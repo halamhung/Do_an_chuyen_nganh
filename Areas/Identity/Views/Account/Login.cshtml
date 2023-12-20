@@ -1,0 +1,189 @@
+﻿@using System.Collections.Generic
+@using Microsoft.AspNetCore.Http
+@using Microsoft.AspNetCore.Authentication
+@model LoginViewModel
+@inject SignInManager<AppUser> SignInManager
+
+@{
+	ViewData["Title"] = "Đăng nhập";
+}
+
+<style>
+	.limiter {
+		margin: 0 10 !important
+	}
+
+	main {
+		margin: -183px 0 !important;
+	}
+
+	label {
+		margin-left: 17px !important;
+		display: flex;
+		align-items: center;
+	}
+
+	input[type="checkbox"] {
+		vertical-align: middle;
+	}
+
+	span {
+		display: inline-block;
+	}
+
+	.w100 {
+		width: 100%;
+	}
+
+	.ml178 {
+		margin-left: 178px !important;
+	}
+
+	input.input100 {
+		width: 437px !important;
+	}
+
+	.forgot__password {
+		display: flex;
+		justify-content: end;
+	}
+
+	.ml55 {
+		margin-left: 55px;
+	}
+
+	.mb30 {
+		margin-bottom: 30px;
+	}
+
+</style>
+
+
+<link href="~/user/login/main.css" rel="stylesheet" />
+<link href="~/user/login/util.css" rel="stylesheet" />
+
+<!--===============================================================================================-->
+<link rel="stylesheet" type="text/css" href="~/user/login/fonts/font-awesome-4.7.0/css/font-awesome.min.css">
+<!--===============================================================================================-->
+<link rel="stylesheet" type="text/css" href="~/user/login/fonts/Linearicons-Free-v1.0.0/icon-font.min.css">
+<!--===============================================================================================-->
+<link rel="stylesheet" type="text/css" href="~/user/login/vendor/animate/animate.css">
+<!--===============================================================================================-->
+<link rel="stylesheet" type="text/css" href="~/user/login/vendor/css-hamburgers/hamburgers.min.css">
+<!--===============================================================================================-->
+<link rel="stylesheet" type="text/css" href="~/user/login/vendor/animsition/css/animsition.min.css">
+<!--===============================================================================================-->
+<link rel="stylesheet" type="text/css" href="~/user/login/vendor/select2/select2.min.css">
+<!--===============================================================================================-->
+<link rel="stylesheet" type="text/css" href="~/user/login/vendor/daterangepicker/daterangepicker.css">
+
+
+<div class="limiter p-5 m-5">
+	<div class="container-login100" style="margin: 2rem 0 1rem 0;">
+		<div class="wrap-login100">
+			<div class="login100-form-title mb30" style="background-image: url(../User/img/about-2.jpg);">
+				<span class="login100-form-title-1">
+					Login
+				</span>
+			</div>
+			@* <h1>@ViewData["Title"].</h1> *@
+			<div class="row" style="padding-top: 30px;">
+				<div class="col-md-8">
+					<section>
+						<form asp-controller="Account" asp-action="Login" asp-route-returnurl="@ViewData["ReturnUrl"]" method="post" class="validate-form limiter ml178 w100" role="form">
+							@* <h4>Sử dụng tài khoản đã đăng ký để đăng nhập</h4> *@
+							@* <hr /> *@
+
+							<div asp-validation-summary="ModelOnly" class="text-danger"></div>
+							<div class="form-group">
+								<div class="wrap-input100 validate-input m-b-26" data-validate="Username is required">
+									<label class="label-input100" for="UserNameOrEmail">Tài khoản</label>
+									<input asp-for="UserNameOrEmail" class="input100 w100" placeholder="Nhập tài khoản">
+									<span asp-validation-for="UserNameOrEmail" class="focus-input100"></span>
+								</div>
+								</div>
+								<div class="form-group">
+									<div class="wrap-input100 validate-input m-b-26" data-validate="Password is required">
+										<label class="label-input100" for="Password">Mật khẩu</label>
+										<input id="Password" asp-for="Password" class="input100" placeholder="Nhập mật khẩu">
+										<span asp-validation-for="Password" class="focus-input100"></span>
+									</div>
+								</div>
+							<div class="forgot__password">
+								<a asp-action="ForgotPassword" class="txt1">
+									Quên mật khẩu?
+								</a>
+							</div>
+							<div class="flex-sb-m w-full"style="padding-bottom: 20px">
+								<div class="contact100-form-checkbox">
+									<span><input type="checkbox" asp-for="RememberMe" /></span>
+									<span>@Html.DisplayNameFor(m => m.RememberMe)</span>
+								</div>
+							</div>
+							<div class="form-group">
+								<div class="col-md-offset-2 col-md-10 container-login100-form-btn">
+									<button type="submit" class="btn btn-primary login100-form-btn ml55">Đăng nhập</button>
+								</div>
+							</div>
+							
+							
+						</form>
+						
+					</section>
+					
+				</div>
+			</div>
+					
+					<div class="form-divider">Hoặc</div>
+					
+							
+				 @{
+                                    var schemes = await SignInManager.GetExternalAuthenticationSchemesAsync();
+                                    var loginProviders = schemes.ToList();
+                                    if (loginProviders.Count == 0)
+                                    { 
+                                    }
+                                    else
+                                    {
+                                        <form asp-controller="Account" asp-action="ExternalLogin" asp-route-returnurl="@ViewData["ReturnUrl"]" method="post" class="form-horizontal" role="form">
+                                            <div>
+                                                <p style="margin-left: 230px;">
+                                                    @foreach (var provider in loginProviders)
+                                                    {
+                                                        var cssClass = "btn btn-user btn-block";
+                                                        var icon = "";
+                                                        if (provider.Name == "Google")
+                                                        {
+                                                            cssClass = "btn btn-google btn-user btn-block";
+                                                            icon = "<i class=\"fab fa-google\"></i>";
+                                                        }
+                                                        else if (provider.Name == "Facebook")
+                                                        {
+                                                            cssClass = "btn btn-facebook btn-user btn-block";
+                                                            icon = "<i class=\"fab fa-facebook\"></i>";
+                                                        }
+                                                        <button type="submit" class="@cssClass" style="background-color: #e01600;border-radius: 5px;padding: 1rem;width: 48%;color: white ;margin-bottom: 85px;" 
+                                                            name="provider" value="@provider.Name" 
+                                                            title="Đăng nhập với @provider.Name">
+                                                            Tiếp tục với @Html.Raw(icon)++
+                                                        </button>
+                                                    }
+                                                </p>
+                                            </div>
+                                        </form>
+                                    }
+                                }
+								<div style="justify-content: center;display: flex">
+								<a asp-action="Register" asp-route-returnurl="@ViewData[" ReturnUrl"]" class="txt1">
+									Không có tài khoản? Bấm vào để đăng ký
+								</a>
+							</div>
+		</div>
+	</div>
+</div>
+
+@section Scripts {
+	@{
+		await Html.RenderPartialAsync("_ValidationScriptsPartial");
+	}
+}

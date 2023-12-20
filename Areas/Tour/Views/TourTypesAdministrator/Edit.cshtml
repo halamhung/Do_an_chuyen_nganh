@@ -1,0 +1,26 @@
+﻿@model HKQTravellingAuthenication.Models.Tour.TourTypes
+
+@{
+    ViewData["Title"] = "Cập nhật loại tour";
+    Layout = "_Layout";
+}
+
+<div class="tile">
+    <h3 class="tile-tile">Cập nhật loại tour</h3>
+
+    <form asp-action="Edit" asp-controller="TourTypesAdministrator" asp-area="Tour" method="post">
+        <div class="tile-body">
+            <div class="row">
+                <input type="hidden" asp-for="TourTypeId" />
+                <div class="form-group">
+                    <label asp-for="TourTypeName" class="control-label"></label>
+                    <input asp-for="TourTypeName" class="form-control" name="TourTypeName" value="@Model.TourTypeName" />
+                    <p class="text-danger">@ViewData["validation_message"]</p>
+                </div>
+            </div>
+        </div>
+    </form>
+    <button class="btn btn-save" value="Save" type="submit">Lưu lại</button>
+    <a class="btn btn-cancel" href="@Url.Action("Index", "TourTypesAdministrator", new { area = "Tour" })">Hủy bỏ</a>
+</div>
+

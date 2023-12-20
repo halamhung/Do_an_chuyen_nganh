@@ -1,0 +1,60 @@
+﻿@model IEnumerable<HKQTravellingAuthenication.Models.Tour.EndLocations>
+
+@{
+    ViewData["Title"] = "Quản lý điểm đến";
+    Layout = "_Layout";
+}
+
+@* @section Breadcrumb {
+    @{
+        ViewData["BreadcrumbTitle"] = "Index for end location";
+    }
+} *@
+
+<div class="tile">
+    <h3 class="tile-tile">Quản lý điểm kết thúc</h3>
+
+    <p>
+        <a href="@Url.Action("Create", "EndLocationsAdministrator", new { area = "Tour" })">Create New</a>
+    </p>
+
+    <table class="table" id="endLocationsTable">
+        <thead>
+            <tr>
+                <th>
+                    <a asp-action="Index">@Html.DisplayNameFor(model => model.EndLocationId)</a>
+                </th>
+                <th>
+                    <a asp-action="Index">@Html.DisplayNameFor(model => model.EndLocationName)</a>
+                </th>
+                <th></th>
+            </tr>
+        </thead>
+        <tbody>
+            @foreach (var item in Model)
+            {
+                <tr>
+                    <td>
+                        @Html.DisplayFor(modelItem => item.EndLocationId)
+                    </td>
+                    <td>
+                        @Html.DisplayFor(modelItem => item.EndLocationName)
+                    </td>
+                    <td>
+                        <a href="@Url.Action("Edit", "EndLocationsAdministrator", new { area = "Tour", id = item.EndLocationId })">Edit</a> |
+                        <a href="@Url.Action("Delete", "EndLocationsAdministrator", new { area = "Tour", id = item.EndLocationId })">Delete</a>
+                    </td>
+                </tr>
+            }
+        </tbody>
+    </table>
+</div>
+@section Scripts {
+    <script>
+        $(document).ready(function () {
+            $('#endLocationsTable').DataTable({
+                // Tùy chọn DataTables có thể thêm ở đây
+            });
+        });
+    </script>
+}

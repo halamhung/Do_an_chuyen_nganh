@@ -1,0 +1,118 @@
+﻿@model HKQTravellingAuthenication.Models.Contact.Contact
+
+@{
+	ViewData["Title"] = "Gửi liên hệ tới HKQTravelling";
+}
+ <link href="~/user/contact/style.css" rel="stylesheet" />
+
+<section class="ftco-section">
+	<div class="container">
+		<div class="row justify-content-center">
+			<div class="col-md-12">
+				<div class="wrapper">
+					<div class="row no-gutters mb-5 border_redius_20">
+						<div class="col-md-7">
+							<div class="contact-wrap w-100 p-md-5 p-4">
+								<h3 class="mb-4">Contact Us</h3>
+								<form asp-action="SendContact" class="iiformcontact">
+									<div asp-validation-summary="ModelOnly" class="text-danger"></div>
+									<div class="row">
+										<div class="col-md-6">
+											<div class="form-group">
+												<label asp-for="FullName" class="control-label"></label>
+												<input asp-for="FullName" class="form-control boder_none" placeholder="Name" />
+												<span asp-validation-for="FullName" class="text-danger"></span>
+											</div>
+										</div>
+										<div class="col-md-6">
+											<div class="form-group">
+												<label asp-for="Email" class="control-label"></label>
+												<input asp-for="Email" class="form-control boder_none" placeholder="Email" />
+												<span asp-validation-for="Email" class="text-danger" ></span>
+											</div>
+										</div>
+										<div class="col-md-12">
+											<div class="form-group">
+												<label asp-for="Phone" class="control-label"></label>
+												<input asp-for="Phone" class="form-control boder_none" placeholder="Phone" />
+												<span asp-validation-for="Phone" class="text-danger" ></span>
+											</div>
+										</div>
+										<div class="col-md-12">
+											<div class="form-group">
+												<label asp-for="Message" class="control-label"></label>
+												<textarea rows="5" asp-for="Message" class="form-control boder_none" placeholder="Message"></textarea>
+												<span asp-validation-for="Message" class="text-danger"></span>
+											</div>
+										</div>
+										<div class="col-md-12">
+											<div class="form-group">
+												<input type="submit" value="Send Message" class="btn btn-primary" style="width: 150px;margin-top:20px;">
+												<div class="submitting"></div>
+											</div>
+										</div>
+									</div>
+								</form>
+							</div>
+						</div>
+						<div class="col-md-5 d-flex align-items-stretch">
+							<iframe src="https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d3919.1265614720305!2d106.71445589999999!3d10.801617499999999!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x317528a459cb43ab%3A0x6c3d29d370b52a7e!2zSFVURUNIIC0gxJDhuqFpIGjhu41jIEPDtG5nIG5naOG7hyBUUC5IQ00gKFNhaSBHb24gQ2FtcHVzKQ!5e0!3m2!1svi!2s!4v1701797681988!5m2!1svi!2s" width="500" height="556" style="border:0;" allowfullscreen="" loading="lazy" referrerpolicy="no-referrer-when-downgrade"></iframe>
+						</div>
+					</div>
+				</div>
+			</div>
+		</div>
+	</div>
+</section>
+
+@* 
+<script src="~/user/contact/js/jquery.min.js"></script>
+<script src="~/user/contact/js/popper.js"></script>
+<script src="~/user/contact/js/bootstrap.min.js"></script>
+<script src="~/user/contact/js/jquery.validate.min.js"></script>
+<script src="~/user/contact/js/main.js"></script>
+ *@
+
+@* <div class="row">
+	<div class="col-md-4">
+		<div class="contact-firstcol p-2 h-100">
+			<img src="~/images/gmail-logo.png" style="width: 100px; height: 100px;"/>
+			<h1>@ViewData["Title"]</h1>
+			<h4>Chúng tôi luôn lắng nghe các ý kiến của bạn !</h4>
+		</div>
+	</div>
+	<div class="col-md-8">
+		<form asp-action="SendContact" class="iiformcontact">
+			<div asp-validation-summary="ModelOnly" class="text-danger"></div>
+			<div class="form-group">
+				<label asp-for="FullName" class="control-label"></label>
+				<input asp-for="FullName" class="form-control" />
+				<span asp-validation-for="FullName" class="text-danger"></span>
+			</div>
+			<div class="form-group">
+				<label asp-for="Email" class="control-label"></label>
+				<input asp-for="Email" class="form-control" />
+				<span asp-validation-for="Email" class="text-danger"></span>
+			</div>
+
+
+			<div class="form-group">
+				<label asp-for="Phone" class="control-label"></label>
+				<input asp-for="Phone" class="form-control" />
+				<span asp-validation-for="Phone" class="text-danger"></span>
+			</div>
+
+			<div class="form-group">
+				<label asp-for="Message" class="control-label"></label>
+				<textarea rows="5" asp-for="Message" class="form-control"></textarea>
+				<span asp-validation-for="Message" class="text-danger"></span>
+			</div>
+
+			<div class="form-group">
+				<input type="submit" value="Gửi liên hệ" class="btn btn-primary" />
+			</div>
+		</form>
+	</div>
+</div> *@
+
+

@@ -1,0 +1,63 @@
+﻿@model AddPhoneNumberViewModel
+@{
+	ViewData["Title"] = "Thêm số điện thoại";
+}
+
+<div class="p-3 d-flex " style="min-height: 20vh;">
+	<div class="card mx-auto">
+		<div class="card-header bg-primary">
+			<h1 class="card-title">@ViewData["Title"]</h1>
+		</div>
+		<div class="card-body">
+
+			<h4 class="card-subtitle">Nhập số điện thoại của tài khoản.</h4>
+			<hr />
+			<div class="row">
+				<div class="col-md-6 col-sm-12">
+					<form asp-controller="Manage" asp-action="AddPhoneNumber" method="post" class="form-horizontal" role="form">
+						<div asp-validation-summary="ModelOnly" class="text-danger"></div>
+						<div class="form-group">
+							<div class="col-md-10">
+								<input asp-for="PhoneNumber" id="phoneNumberInput" class="form-control" placeholder="Ví dụ:+84344156156" />
+								<span asp-validation-for="PhoneNumber" class="text-danger"></span>
+							</div>
+						</div>
+						<div class="form-group">
+							<div class="col-md-offset-2 col-md-10">
+								<button type="submit" class="btn btn-primary">Gửi mã</button>
+							</div>
+						</div>
+					</form>
+				</div>
+			</div>
+		</div>
+	</div>
+</div>
+@section Scripts {
+	@{
+		await Html.RenderPartialAsync("_ValidationScriptsPartial");
+	}
+	<script>
+		document.getElementById('phoneNumberInput').addEventListener('input', function (e) {
+			const phoneNumber = e.target.value;
+			const formattedPhoneNumber = formatPhoneNumber(phoneNumber);
+			e.target.value = formattedPhoneNumber;
+		});
+
+		// Hàm để format số điện thoại theo định dạng +84xxxxxxxxx
+		function formatPhoneNumber(phoneNumber) {
+			// Xóa tất cả ký tự không phải số từ chuỗi số điện thoại
+			const cleaned = phoneNumber.replace(/\D/g, '');
+
+			// Kiểm tra nếu số điện thoại không bắt đầu bằng +84
+			if (cleaned.substring(0, 3) !== '84' && cleaned.length >= 9) {
+				return '+84' + cleaned.substring(cleaned.length - 9);
+			} else {
+				return '+' + cleaned;
+			}
+		}
+	</script>
+	@{
+		await Html.RenderPartialAsync("_ValidationScriptsPartial");
+}
+}

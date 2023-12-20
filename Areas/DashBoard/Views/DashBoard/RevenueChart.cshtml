@@ -1,0 +1,61 @@
+﻿@model IEnumerable<dynamic>
+@{
+    ViewData["Title"] = "RevenueChart";
+    Layout = "~/Views/Shared/_Layout.cshtml";
+}
+
+<div class="tile">
+    <a class="btn btn-cancel" href="@Url.Action("DashBoardInfo")">Trở về</a>
+    <div class="tile-body">
+        <div class="row justify-content-center">
+            <h3 class="tile">Thống kê doanh thu</h3>
+        </div>
+        <div class="row">
+
+            <!-- Đoạn mã JavaScript để vẽ biểu đồ -->
+            <canvas id="revenueChart" width="800" height="400"></canvas>
+        </div>
+    </div>
+</div>
+
+@section Scripts {
+    <!-- Thêm thư viện Chart.js -->
+    <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+    <script>
+        var data = @Html.Raw(Json.Serialize(Model));
+
+        var labels = data.map(item => item.Label);
+        var revenueValues = data.map(item => item.Revenue);
+
+        var ctx = document.getElementById('revenueChart').getContext('2d');
+        var chart = new Chart(ctx, {
+            type: 'bar',
+            data: {
+                labels: labels,
+                datasets: [{
+                    label: 'Doanh thu theo tháng',
+                    data: revenueValues,
+                    backgroundColor: 'rgba(54, 162, 235, 0.6)', // Màu của cột
+                    borderColor: 'rgba(54, 162, 235, 1)', // Màu viền của cột
+                    borderWidth: 1
+                }]
+            },
+            options: {
+                responsive: true,
+                maintainAspectRatio: false,
+                scales: {
+                    yAxes: [{
+                        ticks: {
+                            beginAtZero: true,
+                            callback: function (value, index, values) {
+                                return value.toLocaleString(); // Định dạng số
+                            }
+                        }
+                    }]
+                }
+            }
+        });
+    </script>
+
+}
+

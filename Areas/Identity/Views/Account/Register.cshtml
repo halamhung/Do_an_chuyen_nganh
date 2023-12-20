@@ -1,0 +1,160 @@
+﻿@inject SignInManager<AppUser> SignInManager
+
+@model RegisterViewModel
+@{
+	ViewData["Title"] = "Đăng ký tài khoản";
+}
+
+<style>
+
+    main {
+        margin: -115px 0 !important;
+    }
+	.limiter {
+		margin: 0 10 !important
+	}
+
+	main {
+		margin: -183px 0 !important;
+	}
+
+	label {
+		margin-left: 17px !important;
+		display: flex;
+		align-items: center;
+	}
+
+	input[type="checkbox"] {
+		vertical-align: middle;
+	}
+
+	span {
+		display: inline-block;
+	}
+
+	.w100 {
+		width: 100%;
+	}
+
+	.ml178 {
+		margin-left: 178px !important;
+	}
+
+	input.input100 {
+		width: 437px !important;
+	}
+
+	.login {
+		display: flex;
+		justify-content: end;
+	}
+
+	.ml55 {
+		margin-left: 55px;
+	}
+
+    .mb15 {
+        margin-bottom: 15px;
+    }
+
+    .mb30 {
+        margin-bottom: 30px;
+    }
+
+    ul, li {
+        margin-left: -63px !important;
+    }
+
+	.mb15 {
+		margin-bottom: 15px;
+	}
+
+	.mb30 {
+		margin-bottom: 30px;
+	}
+</style>
+
+<link href="~/user/login/main.css" rel="stylesheet" />
+<link href="~/user/login/util.css" rel="stylesheet" />
+
+<!--===============================================================================================-->
+<link rel="stylesheet" type="text/css" href="~/user/login/fonts/font-awesome-4.7.0/css/font-awesome.min.css">
+<!--===============================================================================================-->
+<link rel="stylesheet" type="text/css" href="~/user/login/fonts/Linearicons-Free-v1.0.0/icon-font.min.css">
+<!--===============================================================================================-->
+<link rel="stylesheet" type="text/css" href="~/user/login/vendor/animate/animate.css">
+<!--===============================================================================================-->
+<link rel="stylesheet" type="text/css" href="~/user/login/vendor/css-hamburgers/hamburgers.min.css">
+<!--===============================================================================================-->
+<link rel="stylesheet" type="text/css" href="~/user/login/vendor/animsition/css/animsition.min.css">
+<!--===============================================================================================-->
+<link rel="stylesheet" type="text/css" href="~/user/login/vendor/select2/select2.min.css">
+<!--===============================================================================================-->
+<link rel="stylesheet" type="text/css" href="~/user/login/vendor/daterangepicker/daterangepicker.css">
+
+<div class="limiter p-5 m-5">
+	<div class="container-login100" style="margin: 2rem 0 2rem 0">
+		<div class="wrap-login100">
+			<div class="login100-form-title mb30" style="background-image: url(../User/img/package-3.jpg);">
+				<span class="login100-form-title-1">
+					Register
+				</span>
+			</div>
+			@* <h1>@ViewData["Title"].</h1> *@
+			<div class="row">
+				<div class="col-md-8">
+					<section>
+						<form asp-controller="Account" asp-action="Register" asp-route-returnurl="@ViewData["ReturnUrl"]" method="post" class="validate-form limiter ml178 w100" role="form">
+							<div asp-validation-summary="ModelOnly" class="text-danger"></div>
+							<div class="form-group">
+								<div class="wrap-input100 validate-input m-b-26" data-validate="Username is required">
+									<span class="label-input100"><label asp-for="UserName"></label></span>
+									<input asp-for="UserName" class="input100 w100" placeholder="Enter username">
+									<span asp-validation-for="UserName" class="focus-input100 text-danger"></span>
+								</div>
+							</div>
+							<div class="form-group">
+								<div class="wrap-input100 validate-input m-b-26" data-validate="Email is required">
+									<span class="label-input100"><label asp-for="Email"></label></span>
+									<input asp-for="Email" class="input100 w100" placeholder="Enter email">
+									<span asp-validation-for="Email" class="focus-input100 text-danger"></span>
+								</div>
+							</div>
+							<div class="form-group">
+								<div class="wrap-input100 validate-input m-b-26" data-validate="Password is required">
+									<span class="label-input100"><label asp-for="Password"></label></span>
+									<input asp-for="Password" class="input100 w100" placeholder="Enter passworđ">
+									<span asp-validation-for="Password" class="focus-input100 text-danger"></span>
+								</div>
+							</div>
+							<div class="form-group">
+								<div class="wrap-input100 validate-input m-b-26" data-validate="Confirm Password is required">
+									<span class="label-input100"><label asp-for="ConfirmPassword"></label></span>
+									<input asp-for="ConfirmPassword" class="input100 w100" placeholder="Enter passworđ">
+									<span asp-validation-for="ConfirmPassword" class="focus-input100 text-danger"></span>
+								</div>
+							</div>
+							<div class="login mb15">
+								<a asp-action="Login" class="txt1">
+									Have an account? Login now!
+								</a>
+							</div>
+							<div class="form-group">
+								<div class="col-md-offset-2 col-md-10 container-login100-form-btn">
+									<button type="submit" class="btn btn-primary login100-form-btn ml55">Đăng ký</button>
+								</div>
+							</div>
+						</form>
+					</section>
+				</div>
+			</div>
+		</div>
+	</div>
+</div>
+
+
+@section Scripts {
+	@{
+		await Html.RenderPartialAsync("_ValidationScriptsPartial");
+	}
+}

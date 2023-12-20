@@ -1,0 +1,120 @@
+﻿@model IEnumerable<HKQTravellingAuthenication.Models.Tour.Tours>
+
+@{
+    ViewData["Title"] = "Quản lý chuyến đi";
+    Layout = "_Layout";
+}
+
+
+
+<div class="tile">
+    <h3 class="tile-tile">Quản lý lịch trình</h3>
+    <p>
+        <a asp-action="Create">Create New</a>
+    </p>
+    <table class="table" id="toursTable">
+        <thead>
+            <tr>
+                <th>
+                    @Html.DisplayNameFor(model => model.TourName)
+                </th>
+                <th>
+                    @Html.DisplayNameFor(model => model.Price)
+                </th>
+                <th>
+                    @Html.DisplayNameFor(model => model.StartDate)
+                </th>
+                <th>
+                    @Html.DisplayNameFor(model => model.EndDate)
+                </th>
+                <th>
+                    @Html.DisplayNameFor(model => model.Status)
+                </th>
+                <th>
+                    @Html.DisplayNameFor(model => model.CreationDate)
+                </th>
+                <th>
+                    @Html.DisplayNameFor(model => model.UpdateDate)
+                </th>
+                <th>
+                    @Html.DisplayNameFor(model => model.Remaining)
+                </th>
+                <th>
+                    @Html.DisplayNameFor(model => model.discounts)
+                </th>
+                <th>
+                    @Html.DisplayNameFor(model => model.startLocations)
+                </th>
+                <th>
+                    @Html.DisplayNameFor(model => model.endLocations)
+                </th>
+                <th></th>
+            </tr>
+        </thead>
+        <tbody>
+            @foreach (var item in Model)
+            {
+                <tr>
+                    <td>
+                        @Html.DisplayFor(modelItem => item.TourName)
+                    </td>
+                    <td>
+                        @Html.DisplayFor(modelItem => item.Price)
+                    </td>
+                    <td>
+                        @Html.DisplayFor(modelItem => item.StartDate)
+                    </td>
+                    <td>
+                        @Html.DisplayFor(modelItem => item.EndDate)
+                    </td>
+                    <td>
+                        @if (item.Status == 1)
+                        {
+                            <text>Đang Hoạt động</text>
+                        }
+                        else if (item.Status == 0)
+                        {
+                            <text>Không hoạt động</text>
+                        }
+                        else
+                        {
+                            <text>Trạng thái không xác định</text>
+                        }
+                    </td>
+                    <td>
+                        @Html.DisplayFor(modelItem => item.CreationDate)
+                    </td>
+                    <td>
+                        @Html.DisplayFor(modelItem => item.UpdateDate)
+                    </td>
+                    <td>
+                        @Html.DisplayFor(modelItem => item.Remaining)
+                    </td>
+                    <td>
+                        @Html.DisplayFor(modelItem => item.discounts.DiscountName)
+                    </td>
+                    <td>
+                        @Html.DisplayFor(modelItem => item.startLocations.StartLocationName)
+                    </td>
+                    <td>
+                        @Html.DisplayFor(modelItem => item.endLocations.EndLocationName)
+                    </td>
+                    <td>
+                        <a asp-action="Edit" asp-route-id="@item.TourId">Edit</a> |
+                        <a asp-action="Details" asp-route-id="@item.TourId">Details</a> |
+                        <a asp-action="Delete" asp-route-id="@item.TourId">Delete</a>
+                    </td>
+                </tr>
+            }
+        </tbody>
+    </table>
+</div>
+@section Scripts {
+    <script>
+        $(document).ready(function () {
+            $('#toursTable').DataTable({
+                // Tùy chọn DataTables có thể thêm ở đây
+            });
+        });
+    </script>
+}

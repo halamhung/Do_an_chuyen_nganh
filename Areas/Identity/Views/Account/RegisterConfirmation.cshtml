@@ -1,0 +1,135 @@
+@{
+    ViewData["Title"] = "Thông báo";
+}
+<style>
+
+    main {
+        margin: -183px 0 !important;
+    }
+
+    label {
+        margin-left: 17px !important;
+        display: flex;
+        align-items: center;
+    }
+
+    input[type="checkbox"] {
+        vertical-align: middle;
+    }
+
+    span {
+        display: inline-block;
+    }
+
+    .w100 {
+        width: 100%;
+    }
+
+    .ml178 {
+        margin-left: 178px !important;
+    }
+
+    input.input100 {
+        width: 437px !important;
+    }
+
+    .login {
+        display: flex;
+        justify-content: end;
+    }
+
+    .ml55 {
+        margin-left: 55px;
+    }
+
+    .mb15 {
+        margin-bottom: 15px;
+    }
+
+    .mb30 {
+        margin-bottom: 30px;
+    }
+
+    ul, li {
+        margin-left: -63px !important
+        /* list-style-type: none; */
+    }
+
+    .notification {
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        margin-bottom: 30px;
+    }
+
+    .notification a {
+        text-decoration: none;
+        display: flex;
+        align-items: center;
+    }
+
+    .notification img {
+        margin-right: 10px; /* Khoảng cách giữa hình ảnh và đoạn văn */
+    }
+</style>
+
+<link href="~/user/login/main.css" rel="stylesheet" />
+<link href="~/user/login/util.css" rel="stylesheet" />
+
+<!--===============================================================================================-->
+<link rel="stylesheet" type="text/css" href="~/user/login/fonts/font-awesome-4.7.0/css/font-awesome.min.css">
+<!--===============================================================================================-->
+<link rel="stylesheet" type="text/css" href="~/user/login/fonts/Linearicons-Free-v1.0.0/icon-font.min.css">
+<!--===============================================================================================-->
+<link rel="stylesheet" type="text/css" href="~/user/login/vendor/animate/animate.css">
+<!--===============================================================================================-->
+<link rel="stylesheet" type="text/css" href="~/user/login/vendor/css-hamburgers/hamburgers.min.css">
+<!--===============================================================================================-->
+<link rel="stylesheet" type="text/css" href="~/user/login/vendor/animsition/css/animsition.min.css">
+<!--===============================================================================================-->
+<link rel="stylesheet" type="text/css" href="~/user/login/vendor/select2/select2.min.css">
+<!--===============================================================================================-->
+<link rel="stylesheet" type="text/css" href="~/user/login/vendor/daterangepicker/daterangepicker.css">
+
+
+
+<div class="limiter">
+    <div class="container-login100">
+        <div class="wrap-login100">
+            <div class="login100-form-title mb30" style="background-image: url(../User/img/package-3.jpg);">
+                <span class="login100-form-title-1">
+                    @ViewData["Title"]
+                </span>
+            </div>
+            @* <h1>@ViewData["Title"].</h1> *@
+            <section>
+                <div class="validate-form limiter w100 notification">
+                    <a href="https://mail.google.com/mail/u/0/#inbox" target="_blank">
+                        <img src="~/images/gmail-logo.png" alt="" style="width:100px;"/>
+                        <p>
+                            Hãy kiểm tra hòm thư để biết cách xác thực tài khoản
+                        </p>
+                    </a>
+                </div>
+            </section>
+            <div class="form-group">
+                <div class="col-md-offset-2 col-md-10 container-login100-form-btn" style="display:flex; justify-content:center;">
+                    <a href="@Url.Action("Login", "Account")" class="btn btn-primary login100-form-btn ml55">Tiếp theo</a>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+
+@*
+
+<div class="container">
+    <h1>@ViewData["Title"]</h1>
+    <p>
+        <a href="https://mail.google.com/mail/u/0/#inbox" target="_blank">
+            <img src="~/images/gmail-logo.png" alt="" width="100" height="100" />
+        </a>
+        Hãy kiểm tra hòm thư để biết cách xác thực tài khoản
+    </p>
+</div> *@

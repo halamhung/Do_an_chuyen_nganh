@@ -1,0 +1,294 @@
+﻿@{
+    ViewData["Title"] = "Index";
+    Layout = "~/Views/Shared/_Layout.cshtml";
+}
+
+@using HKQTravellingAuthenication.Models.Tour;
+@using X.PagedList;
+@model IPagedList<Tours>
+@{
+    var i = 0;
+}
+
+<style>
+    .content__tour {
+        flex: 0 0 75% !important;
+        max-width: 60% !important;
+    }
+
+    .card {
+        border-radius: 36px !important;
+    }
+
+    img {
+        border-radius: 20px !important;
+    }
+
+    .ml300 {
+        margin-left: 300px;
+    }
+
+    .ml120 {
+        margin-left: 120px
+    }
+
+    .filter-container {
+        border-radius: 20px !important;
+    }
+
+    .filter-end {
+        justify-content: center;
+        align-items: center;
+        display: flex;
+    }
+</style>
+<!-- Index Tour Start-->
+
+<div class="container-fluid">
+    <div class="bread-crumb">
+        <div class="container">
+            <ul class="breadcrumb">
+                <li class="breadcrumb-item active"><a href="#">Home</a></li>
+                <li class="breadcrumb-item">
+                    <a asp-area="" asp-controller="Tour" asp-action="Index">Tour</a>
+                </li>
+            </ul>
+        </div>
+    </div>
+    <div class="sale-tour__content box">
+        <div class="container">
+            <div class="tab-search">
+                <div class="tab-search__left">
+                    <div class="box__head text-center">
+                        <h3>Tour</h3>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <div class="tab-content box__content ml120">
+            <div class="tab-search__right" style=" margin-left: 104px;">
+                <span class="navtab-text">Sắp xếp theo : </span>
+                <ul class="nav nav-pills navtab-combo">
+                    <li class="nav-item nav-item-combo active">
+                        <a class=" btn btn--placeholder PriceAsc" style="float: right; background-color: #5FB947; color: #fff; width: 170px; border-radius: 10px;" data-toggle="pill" href="#hottour2"><i class="fas fa-long-arrow-alt-up"></i>Giá tăng dần</a>
+                    </li>
+                    <p style="font-size: 29px;">/</p>
+                    <li class="nav-item nav-item-combo">
+                        <a class="btn btn--placeholder PriceDesc" style="float: right; background-color: #5FB947; color: #fff; width: 170px; border-radius: 10px;" data-toggle="pill" href="#hottour3"><i class="fas fa-long-arrow-alt-down"></i>Giá giảm dần</a>
+                    </li>
+                </ul>
+            </div>
+            <div class="filter-container">
+                <div class="filter-header pb-2">
+                    <h2 class="fw-bolder">Lọc kết quả</h2>
+                </div>
+                <div class="filter-body pb-2">
+                    <div class="filter-group pb-2">
+                        <label for="startLocation">Điểm khởi hành</label>
+                        <select name="startLocation" class="select-startLocation">
+                            <option value="">Chọn điểm khởi hành</option>
+                            @foreach (var location in ViewBag.StartLocations)
+                            {
+                                <option value="@location.Value">@location.Text</option>
+                            }
+                        </select>
+                    </div>
+                    <div class="filter-group pb-2">
+                        <label for="endLocation">Điểm đến</label>
+                        <select name="endLocation" class="select-endLocation">
+                            <option value="">Chọn điểm đến</option>
+                            @foreach (var location in ViewBag.EndLocations)
+                            {
+                                <option value="@location.Value">@location.Text</option>
+                            }
+                        </select>
+                    </div>
+                    <div class="filter-group pb-2">
+                        <label for="types">Loại tour</label>
+                        <select name="types" class="select-type">
+                            <option value="">Chọn loại tour</option>
+                            @foreach (var type in ViewBag.TypeName)
+                            {
+                                <option value="@type.Value">@type.Text</option>
+                            }
+                        </select>
+                    </div>
+                    <div class="filter-end">
+                        <a class="delete__filter btn btn--placeholder" style="background-color: #5FB947; color: #fff;border-radius: 20px; width: 119px; font-size: 14px;" href="@Url.Action("Index", "Tour")"> Xóa bộ lọc</a>
+                    </div>
+                </div>
+
+            </div>
+            <div class="tab-pane active ml300" id="hottour1">
+                <div class="hot-tour__list list-tour">
+
+                    @foreach (var tour in Model)
+                    {
+                        <div class="card mb-3 p-md-3 tour-item">
+                            <div class="row g-0">
+                                <div class="col-md-3 col-12">
+                                    <div class="image">
+                                        @* <a asp-area="" asp-controller="Tour" asp-action="DetailTour" asp-route-id="@tour.TourId"><img src="~/User/img/Tour/@ViewBag.TourImages[i]" alt="" style="width: 164%; height: 286px;"></a>
+                                    @{
+                                    i++;
+                                    } *@
+                                        @if (ViewBag.TourImages != null && ViewBag.TourImages.Count > i)
+                                        {
+                                            <a asp-area="" asp-controller="Tour" asp-action="DetailTour" asp-route-id="@tour.TourId">
+                                                <img src="~/User/img/Tour/@ViewBag.TourImages[i]" alt="" style="width: 164%; height: 286px;">
+                                            </a>
+                                            i++;
+                                        }
+                                    </div>
+                                </div>
+                                <div class="col-md-9 col-12 p-3 content__tour">
+                                    <h5 class="card-title h5 h6-sm fw-bolder mb-3">
+                                        <h4 class="fw-bolder">@tour.TourName</h4>
+                                    </h5>
+                                    <div class="row align-items-center">
+                                        <div class="col-md-8 col-7">
+                                            <div class="d-flex d-lg-block justify-content-between">
+                                                <div>
+                                                    <div class="s-rate">
+                                                        <div class="s-comment">
+                                                            <p class="text-dark">Điểm đi: @tour.startLocations.StartLocationName</p>
+                                                            <p class="text-dark">Điểm đến: @tour.endLocations.EndLocationName</p>
+                                                        </div>
+                                                    </div>
+                                                    <p class="text-dark">Lich khởi hành: @tour.StartDate </p>
+                                                    <p class="text-dark">Lịch trở về:  @tour.EndDate </p>
+                                                </div>
+                                            </div>
+                                        </div>
+                                        <div class="col-md-4 col-5 text-end">
+                                            <h6 class="text-primary">Giá/vé</h6>
+                                            <h5 class="text-primary fw-bold">
+                                                <span class="price">@String.Format("{0:0,0}", tour.Price) VND</span>
+                                            </h5>
+                                        </div>
+                                    </div>
+                                    <div class="d-flex justify-content-end m-2 btn_detail">
+                                        <a class=" btn btn--placeholder" style="float: right; background-color: #5FB947; color: #fff;border-radius: 20px;" asp-area="" asp-controller="Tour" asp-action="DetailTour" asp-route-id="@tour.TourId">Chi Tiết</a>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    }
+                </div>
+            </div>
+            <div id="toursContainer" class="hidden">
+                @await Html.PartialAsync("_ToursPricePartial", Model)
+            </div>
+        </div>
+        <div class="MenuTrang" style="display: flex;justify-content: center;padding-top: 16px;">
+            @await Html.PartialAsync("_PagedListPager", Model)
+        </div>
+    </div>
+</div>
+<!-- Index Tour End-->
+
+<script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
+<script>
+    // Search by startLocationId
+    $(document).ready(function () {
+        $('.select-startLocation').change(function () {
+            $('.tour-item').hide();
+            $('.MenuTrang').hide();
+            var startLocationId = $(this).val();
+            console.log(startLocationId);
+            $.ajax({
+                url: '/Tour/GetToursByStartLocation',
+                type: 'GET',
+                data: { startLocationId: startLocationId },
+                success: function (data) {
+                    $('#toursContainer').html(data);
+                }
+            });
+        });
+    });
+</script>
+<script>
+    // Search by endLocationId
+    $(document).ready(function () {
+        $('.select-endLocation').change(function () {
+            $('.tour-item').hide();
+            $('.MenuTrang').hide();
+            var endLocationId = $(this).val();
+            console.log(endLocationId);
+            $.ajax({
+                url: '/Tour/GetToursByEndLocation',
+                type: 'GET',
+                data: { endLocationId: endLocationId },
+                success: function (data) {
+                    $('#toursContainer').html(data);
+                }
+            });
+        });
+    });
+</script>
+<script>
+    //Sort price by Asc
+    $(document).ready(function () {
+        $('.PriceAsc').click(function (e) {
+            $('.tour-item').hide();
+            $('.MenuTrang').hide();
+            e.preventDefault();
+
+            var sortType = $(this).text().trim(); // Lấy nội dung của nút được nhấn
+
+            if (sortType === 'Giá tăng dần') {
+                $.ajax({
+                    url: '/Tour/GetToursSortedByPriceAsc',
+                    type: 'GET',
+                    success: function (data) {
+                        $('#toursContainer').removeClass('hidden');
+                        $('#toursContainer').html(data); // Cập nhật nội dung của #toursContainer với kết quả trả về
+                    }
+                });
+            }
+        });
+    });
+</script>
+<script>
+    //Sort price by Desc
+    $(document).ready(function () {
+        $('.PriceDesc').click(function (e) {
+            $('.tour-item').hide();
+            $('.MenuTrang').hide();
+            e.preventDefault();
+
+            var sortType = $(this).text().trim(); // Lấy nội dung của nút được nhấn
+
+            if (sortType === 'Giá giảm dần') {
+                $.ajax({
+                    url: '/Tour/GetToursSortedByPriceDesc',
+                    type: 'GET',
+                    success: function (data) {
+                        $('#toursContainer').removeClass('hidden');
+                        $('#toursContainer').html(data); // Cập nhật nội dung của #toursContainer với kết quả trả về
+                    }
+                });
+            }
+        });
+    });
+</script>
+<script>
+    // Search by typeID
+    $(document).ready(function () {
+        $('.select-type').change(function () {
+            $('.tour-item').hide();
+            $('.MenuTrang').hide();
+            var typeID = $(this).val();
+            console.log(typeID);
+            $.ajax({
+                url: '/Tour/GetToursByType',
+                type: 'GET',
+                data: { typeID: typeID },
+                success: function (data) {
+                    $('#toursContainer').html(data);
+                }
+            });
+        });
+    });
+</script>
+

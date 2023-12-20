@@ -1,0 +1,68 @@
+﻿@model HKQTravellingAuthenication.Models.Tour.Discounts
+
+@{
+    ViewData["Title"] = "Cập nhật chương trình giảm giá";
+    Layout = "_Layout";
+}
+<div class="row">
+    <h3 class="tile-tile">Cập nhật chương trình giảm giá</h3>
+    <form asp-action="Edit" asp-controller="DiscountsAdministrator" asp-area="Tour" method="post">
+        <div class="tile-body">
+            <div class="row">
+                <input type="hidden" asp-for="DiscountId" />
+                <div class="form-group col-md-6">
+                    <label asp-for="DiscountName" class="control-label"></label>
+                    <input asp-for="DiscountName" class="form-control" name="DiscountName" value="@Model.DiscountName" />
+                    <p class="text-danger">@ViewData["validation_message_discountName"]</p>
+                </div>
+                <div class="form-group col-md-6">
+                    <label asp-for="DiscountPercentage" class="control-label"></label>
+                    <span class="text-danger">Lưu ý; phép cộng là "+", phép trừ là "-", phép nhân là "*"<br />và phép chia là "/".</span>
+                    <input asp-for="DiscountPercentage" class="form-control" id="DiscountPercentage" name="DiscountPercentage" value="@Model.DiscountPercentage" />
+                    <input class="btn btn-primary" type="button" value="Tính Toán" onclick="calculateDiscount()" />
+                    <p class="text-danger">@ViewData["validation_message_discountPercentage"]</p>
+                </div>
+                <div class="form-group col-md-6">
+                    <label asp-for="DiscountDateStart">Discount Start Date:</label>
+                    <input asp-for="DiscountDateStart" type="datetime-local" class="form-control" name="DiscountDateStart" value="@ViewBag.DiscountDateStart" />
+                    <span asp-validation-for="DiscountDateStart" class="text-danger"></span>
+                </div>
+
+                <div class="form-group col-md-6">
+                    <label asp-for="DiscountDateEnd">Discount End Date:</label>
+                    <input asp-for="DiscountDateEnd" type="datetime-local" class="form-control" name="DiscountDateEnd" value="@ViewBag.DiscountDateEnd" />
+                    <span asp-validation-for="DiscountDateEnd" class="text-danger"></span>
+                </div>
+            </div>
+        </div>
+        <button class="btn btn-save" value="Save" type="submit">Lưu lại</button>
+        <a class="btn btn-cancel" href="@Url.Action("Index", "DiscountsAdministrator", new { area = "Tour" })">Hủy bỏ</a>
+    </form>
+</div>
+
+<script>
+    function calculateDiscount() {
+        // Lấy giá trị nhập vào từ input
+        const inputValue = document.getElementById('DiscountPercentage').value;
+
+        try {
+            // Thực hiện tính toán theo phép tính được nhập vào
+            const result = eval(inputValue); // Sử dụng hàm eval để tính toán biểu thức
+
+            // Kiểm tra xem kết quả có phải là số và không phải NaN không
+            if (!isNaN(result) && typeof result === 'number') {
+                // Hiển thị kết quả vào input
+                document.getElementById('DiscountPercentage').value = result;
+            } else {
+                // Nếu kết quả không hợp lệ, thông báo lỗi
+                alert('Phép tính không hợp lệ!');
+                document.getElementById('DiscountPercentage').value = ''; // Xóa nội dung input
+            }
+        } catch (error) {
+            // Xử lý nếu có lỗi xảy ra trong quá trình tính toán
+            alert('Có lỗi xảy ra trong quá trình tính toán!');
+            document.getElementById('DiscountPercentage').value = ''; // Xóa nội dung input
+        }
+    }
+</script>
+

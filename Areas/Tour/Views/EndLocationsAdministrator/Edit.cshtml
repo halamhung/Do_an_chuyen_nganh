@@ -1,0 +1,24 @@
+﻿@model HKQTravellingAuthenication.Models.Tour.EndLocations
+
+@{
+    ViewData["Title"] = "Cập nhật điểm đến";
+    Layout = "_Layout";
+}
+<div class="tile">
+    <h3 class="tile-tile">Cập nhật điểm kết thúc</h3>
+    <form asp-action="Edit" asp-controller="EndLocationsAdministrator" asp-area="Tour" method="post">
+        <div class="tile-body">
+            <div class="row">
+                <input type="hidden" asp-for="EndLocationId" />
+                <div class="form-group col-md-6">
+                    <label class="control-label" for="EndLocationName">Tên điểm kết thúc</label>
+                    <input asp-for="EndLocationName" class="form-control" name="EndLocationName" value="@Model.EndLocationName" />
+                    <p class="text-danger">@ViewData["validation_message"]</p>
+                </div>
+            </div>
+        </div>
+
+        <button class="btn btn-save" value="Save" type="submit">Lưu lại</button>
+        <a class="btn btn-cancel" href="@Url.Action("Index", "EndLocationsAdministrator", new { area = "Tour" })">Hủy bỏ</a>
+    </form>
+</div>

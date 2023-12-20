@@ -1,0 +1,51 @@
+﻿@model HKQTravellingAuthenication.Areas.DashBoard.Models.DashboardInfo
+
+@{
+    ViewData["Title"] = "Thống kê";
+    Layout = "_Layout";
+}
+
+<div class="tile">
+    <h1 class="tile-tile">Dashboard Information</h1>
+    <div class="table-reponsive">
+        <table border="1" class="table table-bordered table-striped">
+            <thead class="thead-dark">
+                <tr>
+                    <th>Tên thông tin</th>
+                    <th>Số lượng</th>
+                </tr>
+            </thead>
+            <tbody>
+                <tr>
+                    <td>Tổng số người dùng</td>
+                    <td>@Model.TotalUsers</td>
+                </tr>
+                <tr>
+                    <td>Tổng số bài đăng đang hoạt động</td>
+                    <td>@Model.TotalPosts</td>
+                </tr>
+                <tr>
+                    <td>Tổng số người đặt tour</td>
+                    <td>@Model.TotalBookings</td>
+                </tr>
+                <tr>
+                    <td>Tổng số người thanh toán</td>
+                    <td>@Model.TotalPayments</td>
+                </tr>
+                <tr>
+                    <td>Tổng số lịch trình đang hoạt động</td>
+                    <td>@Model.TotalTours</td>
+                </tr>
+                <tr>
+                    <td>Doanh thu đạt được</td>
+                    <td class="text-danger">@String.Format("{0:0,0}", Model.TotalPrices) VND</td>
+                </tr>
+            </tbody>
+        </table>
+    </div>
+
+    <hr />
+    <a class="btn btn-primary btn-block w-50" href="@Url.Action("RevenueChart")">
+        Biểu đồ Doanh thu
+    </a>
+</div>

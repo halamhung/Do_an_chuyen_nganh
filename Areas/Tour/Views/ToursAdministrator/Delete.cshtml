@@ -1,0 +1,101 @@
+﻿@model HKQTravellingAuthenication.Models.Tour.Tours
+
+@{
+    ViewData["Title"] = "Delete";
+    Layout = "~/Views/Shared/_Layout.cshtml";
+}
+
+<style>
+    .dl-horizontal {
+        display: flex;
+        flex-wrap: wrap;
+    }
+
+        .dl-horizontal dt {
+            flex-basis: 30%; /* Điều chỉnh độ rộng của các phần tử dt */
+            flex-shrink: 0;
+            margin-right: 15px; /* Khoảng cách giữa các phần tử dt và dd */
+        }
+
+        .dl-horizontal dd {
+            flex-basis: 70%; /* Điều chỉnh độ rộng của các phần tử dd */
+            flex-shrink: 0;
+        }
+</style>
+<div class="tile">
+    <h3 class="tile-tile">Bạn có chắc chắn là xóa chương trình lịch trình này?</h3>
+    <dl class="dl-horizontal">
+        <dt>
+            @Html.DisplayNameFor(model => model.TourName)
+        </dt>
+        <dd>
+            @Html.DisplayFor(model => model.TourName)
+        </dd>
+        <dt>
+            @Html.DisplayNameFor(model => model.Price)
+        </dt>
+        <dd>
+            @Html.DisplayFor(model => model.Price)
+        </dd>
+        <dt>
+            @Html.DisplayNameFor(model => model.StartDate)
+        </dt>
+        <dd>
+            @Html.DisplayFor(model => model.StartDate)
+        </dd>
+        <dt>
+            @Html.DisplayNameFor(model => model.EndDate)
+        </dt>
+        <dd>
+            @Html.DisplayFor(model => model.EndDate)
+        </dd>
+        <dt>
+            @Html.DisplayNameFor(model => model.Status)
+        </dt>
+        <dd>
+            @Html.DisplayFor(model => model.Status)
+        </dd>
+        <dt>
+            @Html.DisplayNameFor(model => model.CreationDate)
+        </dt>
+        <dd>
+            @Html.DisplayFor(model => model.CreationDate)
+        </dd>
+        <dt>
+            @Html.DisplayNameFor(model => model.UpdateDate)
+        </dt>
+        <dd>
+            @Html.DisplayFor(model => model.UpdateDate)
+        </dd>
+        <dt>
+            @Html.DisplayNameFor(model => model.Remaining)
+        </dt>
+        <dd>
+            @Html.DisplayFor(model => model.Remaining)
+        </dd>
+        <dt>
+            @Html.DisplayNameFor(model => model.discounts)
+        </dt>
+        <dd>
+            @Html.DisplayFor(model => model.discounts.DiscountId)
+        </dd>
+        <dt>
+            @Html.DisplayNameFor(model => model.startLocations)
+        </dt>
+        <dd>
+            @Html.DisplayFor(model => model.startLocations.StartLocationName)
+        </dd>
+        <dt>
+            @Html.DisplayNameFor(model => model.endLocations)
+        </dt>
+        <dd>
+            @Html.DisplayFor(model => model.endLocations.EndLocationName)
+        </dd>
+    </dl>
+
+    <form asp-action="Delete" asp-controller="ToursAdministrator" asp-area="Tour" method="post">
+        <input type="hidden" asp-for="TourId" />
+        <button type="submit" value="Delete" class="btn btn-save"> Xóa</button>
+        <a class="btn btn-cancel" asp-action="Index">Hủy bỏ</a>
+    </form>
+</div>

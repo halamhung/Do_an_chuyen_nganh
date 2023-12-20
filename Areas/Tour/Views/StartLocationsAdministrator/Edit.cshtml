@@ -1,0 +1,26 @@
+﻿@model HKQTravellingAuthenication.Models.Tour.StartLocations
+
+@{
+    ViewData["Title"] = "Cập nhật điểm đi";
+    Layout = "_Layout";
+}
+
+<div class="tile">
+    <h3 class="tile-tile">Cập nhật điểm khởi hành</h3>
+    <form asp-action="Edit" asp-controller="StartLocationsAdministrator" asp-area="Tour" method="post">
+        <div class="tile-body">
+            <div class="row">
+                <input type="hidden" asp-for="StartLocationId" />
+                <div class="form-group col-md-6">
+                    <label class="control-label" for="StartLocationName">Tên điểm khởi hành</label>
+                    <input asp-for="StartLocationName" class="form-control" name="StartLocationName" value="@Model.StartLocationName" />
+                    <p class="text-danger">@ViewData["validation_message"]</p>
+                </div>
+            </div>
+        </div>
+
+        <button class="btn btn-save" value="Save" type="submit">Lưu lại</button>
+        <a class="btn btn-cancel" href="@Url.Action("Index", "StartLocationsAdministrator", new { area = "Tour" })">Hủy bỏ</a>
+    </form>
+</div>
+

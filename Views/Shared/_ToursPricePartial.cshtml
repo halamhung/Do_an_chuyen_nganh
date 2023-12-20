@@ -1,0 +1,89 @@
+﻿@using HKQTravellingAuthenication.Models.Tour;
+@using X.PagedList
+@model IPagedList<Tours>
+@{
+    var i = 0;
+}
+
+<style>
+    .container:empty {
+        display: none;
+    }
+
+    .footer {
+        position: absolute;
+        bottom: 0;
+        width: 100%;
+    }
+
+    .content__tour {
+        flex: 0 0 75% !important;
+        max-width: 60% !important;
+    }
+
+</style>
+
+<div class="tab-pane active" id="hottour1">
+    <div class="hot-tour__list list-tour">
+
+        @foreach (var tour in Model)
+        {
+            
+            <div class="card mb-3 p-md-3">
+                <div class="row g-0">
+                    <div class="col-md-3 col-12">
+                        <div class="image">
+                            @* <a asp-area="" asp-controller="Tour" asp-action="DetailTour" asp-route-id="@tour.TourId"><img src="~/User/img/Tour/@ViewBag.TourImages[i]" alt="" style="width: 164%; height: 286px;"></a>
+                            @{
+                                i++;
+                            } *@
+                            @if (ViewBag.TourImages != null && ViewBag.TourImages.Count > i)
+                            {
+                                <a asp-area="" asp-controller="Tour" asp-action="DetailTour" asp-route-id="@tour.TourId">
+                                    <img src="~/User/img/Tour/@ViewBag.TourImages[i]" alt="" style="width: 164%; height: 286px;">
+                                </a>
+                                i++;
+                            }
+                        </div>
+                    </div>
+                    <div class="col-md-9 col-12 p-3 content__tour">
+                        <h5 class="card-title h5 h6-sm fw-bolder mb-3">
+                            <h4 class="fw-bolder">@tour.TourName</h4>
+                        </h5>
+                        <div class="row align-items-center">
+                            <div class="col-md-8 col-7">
+                                <div class="d-flex d-lg-block justify-content-between">
+                                    <div>
+                                        <div class="s-rate">
+                                            <div class="s-comment">
+                                                <p class="text-dark">Điểm đi: @ViewBag.StartLocationNames</p>
+                                                <p class="text-dark">Điểm đến: @ViewBag.EndLocationNames</p>
+                                            </div>
+                                        </div>
+                                        <p class="text-dark">Lich khởi hành: @tour.StartDate </p>
+                                        <p class="text-dark">Lịch trở về:  @tour.EndDate </p>
+                                        
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="col-md-4 col-5 text-end">
+                                <h6 class="text-primary">Giá/vé</h6>
+                                <h5 class="text-primary fw-bold">
+                                    <span class="price">@String.Format("{0:0,0}", tour.Price) VND</span>
+                                </h5>
+                            </div>
+
+                        </div>
+                        <div class="d-flex justify-content-end m-2 btn_detail">
+                            <a class=" btn btn--placeholder" style="float: right; background-color: #5FB947; color: #fff;border-radius: 20px;" asp-area="" asp-controller="Tour" asp-action="DetailTour" asp-route-id="@tour.TourId">Chi Tiết</a>
+                        </div>
+                    </div>
+
+                </div>
+            </div>
+        }
+    </div>
+</div>
+@* <div class="MenuTrang" style="display: flex;justify-content: center;padding-top: 16px;">
+    @await Html.PartialAsync("_PagedListPager", Model)
+</div> *@

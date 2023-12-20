@@ -1,0 +1,37 @@
+﻿@using Microsoft.AspNetCore.Identity
+@using HKQTravellingAuthenication.Models
+@using Microsoft.AspNetCore.Mvc.ViewEngines
+
+@inject SignInManager<AppUser> SignInManager
+@inject UserManager<AppUser> UserManager
+@inject ICompositeViewEngine Engine
+
+@{
+    var userName = UserManager.GetUserName(User);
+    var displayedName = "";
+    if(userName != null) {
+        displayedName = userName.Length > 7 ? $"{userName.Substring(0, 7)}..." : userName;
+    }
+}
+@if (SignInManager.IsSignedIn(User))
+{
+    <form asp-area="Identity" asp-controller="Account" asp-action="LogOff" method="post" id="logoutForm">
+        <div class="nav-item dropdown">
+            <a href="#" class="nav-link dropdown-toggle" data-toggle="dropdown">Xin chào @displayedName!</a>
+            <div class="dropdown-menu border-0 rounded-0 m-0">
+                @Html.ActionLink("Quản lý thông tin", "Index", "Manage", new { area = "Identity" }, new { @class = "dropdown-item" })
+                <button type="submit" class="dropdown-item btn btn-link navbar-btn navbar-link">Đăng xuất</button>
+            </div>
+        </div>
+    </form>
+}
+else
+{
+    <div class="nav-item dropdown">
+        <a href="#" class="nav-link dropdown-toggle" data-toggle="dropdown">Tài khoản</a>
+        <div class="dropdown-menu border-0 rounded-0 m-0">
+            <a href="@Url.Action("Login", "Account", new { Area = "Identity" })" class="dropdown-item">Đăng nhập</a>
+            <a href="@Url.Action("Register", "Account", new { Area = "Identity" })" class="dropdown-item">Đăng ký</a>
+        </div>
+    </div>
+}

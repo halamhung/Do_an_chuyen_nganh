@@ -1,0 +1,46 @@
+﻿@model IEnumerable<HKQTravellingAuthenication.Models.Tour.TourTypes>
+
+@{
+    ViewData["Title"] = "Quản lý loại tour";
+    Layout = "_Layout";
+}
+
+<div class="tile">
+    <h3 class="tile-tile">Quản lý loại tour</h3>
+    <p>
+        <a href="@Url.Action("Create", "TourTypesAdministrator", new { area = "Tour" })">Create New</a>
+    </p>
+    <table class="table" id="tourTypesTable">
+        <thead>
+            <tr>
+                <th>
+                    @Html.DisplayNameFor(model => model.TourTypeName)
+                </th>
+                <th></th>
+            </tr>
+        </thead>
+        <tbody>
+            @foreach (var item in Model)
+            {
+                <tr>
+                    <td>
+                        @Html.DisplayFor(modelItem => item.TourTypeName)
+                    </td>
+                    <td>
+                        <a href="@Url.Action("Edit", "TourTypesAdministrator", new { area = "Tour", id = item.TourTypeId })">Edit</a> |
+                        <a href="@Url.Action("Delete", "TourTypesAdministrator", new { area = "Tour", id = item.TourTypeId })">Delete</a>
+                    </td>
+                </tr>
+            }
+        </tbody>
+    </table>
+</div>
+@section Scripts {
+    <script>
+        $(document).ready(function () {
+            $('#tourTypesTable').DataTable({
+                // Tùy chọn DataTables có thể thêm ở đây
+            });
+        });
+    </script>
+}

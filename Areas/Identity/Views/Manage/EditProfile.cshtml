@@ -1,0 +1,215 @@
+@model EditExtraProfileModel
+@{
+	ViewData["Title"] = "Hồ sơ cá nhân";
+}
+
+
+<div class="p-3">
+	<div class="text-center">
+		<h4>@ViewData["Title"]</h4>
+		<partial name="_StatusMessage" />
+	</div>
+	<div class="row p-3 border border-success">
+		<div class="col-md-6">
+			<form id="profile-form" method="post">
+				<div class="row mt-4 p-3">
+					<div asp-validation-summary="ModelOnly" class="text-danger"></div>
+
+					<div class="form-group col-6">
+						<label asp-for="UserName">Tên tài khoản:</label>
+						<input asp-for="UserName" class="form-control" disabled />
+					</div>
+					<div class="form-group  col-6">
+						<label asp-for="UserEmail">Địa chỉ email:</label>
+						<input asp-for="UserEmail" class="form-control" disabled />
+					</div>
+
+					<div class="form-group  col-6">
+						<label asp-for="PhoneNumber">Số điện thoại:</label>
+						<input asp-for="PhoneNumber" class="form-control" disabled/>
+					</div>
+					<div class="form-group  col-6">
+						<label asp-for="FullName">Họ và tên:</label>
+						<input asp-for="FullName" class="form-control" />
+					</div>
+					<div class="form-group  col-6">
+						<label asp-for="HomeAdress">Địa chỉ:</label>
+						<textarea asp-for="HomeAdress" class="form-control"></textarea>
+						<span asp-validation-for="HomeAdress" class="text-danger"></span>
+					</div>
+					<div class="form-group  col-6">
+						<label asp-for="BirthDate">Ngày sinh:</label>
+						<input asp-for="BirthDate" class="form-control" />
+					</div>
+					<div class="form-group  col-6">
+						<label asp-for="NewCitizenIdentification">Mã CCCD mới:</label>
+						<input asp-for="NewCitizenIdentification" class="form-control" />
+					</div>
+					<div class="form-group  col-6">
+						<label asp-for="OldCitizenIdentification">Mã CCCD cũ:</label>
+						<input asp-for="OldCitizenIdentification" class="form-control" />
+					</div>
+					<div class="form-group  col-6">
+						<label asp-for="Gender">Giới tính:</label>
+						<select asp-for="Gender" class="form-control">
+							<option value="Nam" selected="@(Model.Gender == "Nam" ? "selected" : "")">Nam</option>
+							<option value="Nữ" selected="@(Model.Gender == "Nữ" ? "selected" : "")">Nữ</option>
+							<option value="Khác" selected="@(Model.Gender == "Khác" ? "selected" : "")">Khác</option>
+						</select>
+					</div>
+
+					<div class="form-group  col-6">
+						<label asp-for="DateOfInssuance">Ngày cấp CCCD:</label>
+						<input asp-for="DateOfInssuance" class="form-control" />
+					</div>
+				</div>
+				<button id="update-profile-button" type="submit" class="btn btn-primary btn-sm btn-block">Lưu dữ liệu</button>
+			</form>
+			<div>
+				<h2>Cập nhật thông tin CCCD</h2>
+				<button id="scanQRCode" class="btn btn-primary btn-sm w-100">Quét QR Code</button>
+			</div>
+		</div>
+
+		<div class="col-md-6 d-flex flex-column align-items-center">
+			<h2 class="text-center">WebCam</h2>
+			<div class="border border-success" style="width: 320px; height: 240px; overflow: hidden;">
+				<video id="videoFeed" width="100%" height="100%" autoplay></video>
+			</div>
+			<canvas id="canvas" style="display:none;"></canvas>
+
+
+			<div id="decodedResult" class="p-2"></div>
+
+
+			<button class="btn btn-primary w-100" id="fillDataBtn" style="width: 225px;">Điền thông tin từ CCCD vào form bên trái</button>
+		</div>
+	</div>
+</div>
+
+
+@section Scripts {
+	<partial name="_ValidationScriptsPartial" />
+	<!-- Thư viện qr-scanner -->
+	@* <script src="https://cdn.jsdelivr.net/npm/qr-scanner@1.4.2/qr-scanner.min.js"></script> *@
+	<script src="https://cdn.jsdelivr.net/npm/jsqr@1.4.0/dist/jsQR.js"></script>
+	<script>
+		// JavaScript code
+		const video = document.getElementById('videoFeed');
+		const canvas = document.getElementById('canvas');
+		const context = canvas.getContext('2d');
+		const decodedResultDiv = document.getElementById('decodedResult');
+		let scanning = false; // Khởi tạo trạng thái quét là false ban đầu
+
+		// Hàm để bật hoặc tắt quét QR Code
+		function toggleQRScanning() {
+			if (!scanning) {
+				// Bật quét
+				navigator.mediaDevices.getUserMedia({ video: { facingMode: 'environment' } })
+					.then(function (stream) {
+						video.srcObject = stream;
+						canvas.width = video.videoWidth;
+						canvas.height = video.videoHeight;
+						scanQRCode(); // Bắt đầu quét khi stream đã sẵn sàng
+					})
+					.catch(function (error) {
+						console.error('Error accessing the webcam:', error);
+					});
+			} else {
+				// Tắt quét
+				const stream = video.srcObject;
+				const tracks = stream.getTracks();
+
+				tracks.forEach(function (track) {
+					track.stop(); // Dừng stream từ webcam
+				});
+
+				video.srcObject = null; // Ngừng stream
+				decodedResultDiv.textContent = ''; // Xóa kết quả trước đó
+			}
+
+			// Đảo ngược trạng thái quét
+			scanning = !scanning;
+		}
+
+		// Thêm sự kiện cho nút để bật hoặc tắt quét QR Code khi click
+		const scanQRCodeButton = document.getElementById('scanQRCode');
+		scanQRCodeButton.addEventListener('click', toggleQRScanning);
+
+
+
+		// Các hàm khác vẫn giữ nguyên như trước
+		function scanQRCode() {
+			// Get necessary elements
+			const video = document.getElementById('videoFeed');
+			const canvas = document.getElementById('canvas');
+			const context = canvas.getContext('2d');
+			const decodedResultDiv = document.getElementById('decodedResult');
+			let scanning = true;
+
+			// Check for webcam support
+			navigator.mediaDevices.getUserMedia({ video: { facingMode: 'environment' } })
+				.then(function (stream) {
+					video.srcObject = stream;
+				})
+				.catch(function (error) {
+					console.error('Error accessing the webcam:', error);
+				});
+
+			// Function to scan the QR code
+			function scanQRCode() {
+				//if (!scanning) return; // Stop scanning if `scanning` is set to false
+
+				context.drawImage(video, 0, 0, canvas.width, canvas.height);
+				const imageData = context.getImageData(0, 0, canvas.width, canvas.height);
+				const code = jsQR(imageData.data, imageData.width, imageData.height);
+
+				if (code) {
+					decodedResultDiv.textContent = code.data;
+					scanning = false; // Set scanning to false after successfully detecting a QR code
+				} else {
+					decodedResultDiv.textContent = 'No QR code detected';
+				}
+
+				if (scanning) {
+					requestAnimationFrame(scanQRCode);
+				}
+			}
+
+			// Start scanning
+			video.addEventListener('loadeddata', function () {
+				canvas.width = video.videoWidth;
+				canvas.height = video.videoHeight;
+				scanQRCode();
+			});
+		}
+		// Hàm cắt chuỗi và điền vào các input tương ứng
+		function fillDataToInputs() {
+			const dataString = decodedResultDiv.textContent;
+			if (dataString) {
+				const data = dataString.split('|');
+
+				document.getElementById('NewCitizenIdentification').value = data[0] || '';
+				document.getElementById('OldCitizenIdentification').value = data[1] || '';
+				document.getElementById('FullName').value = data[2] || '';
+				document.getElementById('BirthDate').value = formatDOB(data[3]) || '';
+				document.getElementById('Gender').value = data[4] || '';
+				document.getElementById('HomeAdress').value = data[5] || '';
+				document.getElementById('DateOfInssuance').value = formatDOB(data[6]) || '';
+			} else {
+				alert('Không có dữ liệu để điền');
+			}
+		}
+
+		// Hàm chuyển đổi định dạng ngày tháng
+		function formatDOB(dob) {
+			if (!dob) return '';
+
+			const formattedDOB = `${dob.substr(4, 4)}-${dob.substr(2, 2)}-${dob.substr(0, 2)}T00:00`;
+			return formattedDOB;
+		}
+
+		const fillDataBtn = document.getElementById('fillDataBtn');
+		fillDataBtn.addEventListener('click', fillDataToInputs);
+	</script>
+}
